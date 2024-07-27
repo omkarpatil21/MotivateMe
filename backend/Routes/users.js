@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const router =Router();
-const { JWT_SECRET } = require("../config");
+const { LEETCODE_API, JWT_SECRET } = require("../config");
 const jwt = require("jsonwebtoken");
 const {User} = require("./../db")
 const axios = require("axios");
@@ -43,7 +43,7 @@ router.post('/signup', async (req,res)=>{
             message :"User already present"
         })
     }
-    const response = await axios.get("https://leetcode-api-faisalshohag.vercel.app/"+username);
+    const response = await axios.get(LEETCODE_API+username);
     if(response.data.errors)
     {
         return res.status(411).json({
