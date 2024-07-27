@@ -4,8 +4,16 @@ const {User} = require("./../db")
 const axios = require("axios")
 
 router.get('/', async(req,res)=>{
-    const list= await User.find({}).select('username problems -_id');
-    res.send(list);
+    const filter=req.query.filter||"";
+    const users = await User.find({
+        $or: [
+            { username: {
+                "$regex":filter
+            } }
+        ]
+    }).select('username problems -_id');
+    console.log(users);
+    res.send(users);
 })
 
 router.post('/', async (req,res)=>{
