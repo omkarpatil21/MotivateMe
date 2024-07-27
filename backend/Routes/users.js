@@ -6,13 +6,13 @@ const {User} = require("./../db")
 const axios = require("axios");
 const authMiddleware = require("../middleware");
 
-router.get('/bulk', async(req,res)=>{
+router.get('/bulk',authMiddleware, async(req,res)=>{
     const filter=req.query.filter||"";
     const users = await User.find({
         $or: [
-            { username: {
-                "$regex":filter
-            } }
+            { username: { $regex: filter, $options: 'i' } }, // 'i' for case-insensitive search
+            { firstName: { $regex: filter, $options: 'i' } },
+            { lastName: { $regex: filter, $options: 'i' } }
         ]
     }).select('-__v -password ');
     console.log(users);
@@ -34,7 +34,7 @@ router.post("/signin",async(req,res)=>{
 router.post('/signup', async (req,res)=>{
     const username=req.body.username;
     const firstName = req.body.firstName;
-    const lastName = req.body.firstName;
+    const lastName = req.body.lastName;
     const password = req.body.password;
     const user = await User.findOne({username});
     if(user)
@@ -55,6 +55,9 @@ router.post('/signup', async (req,res)=>{
         lastName : lastName,
         username:username,
         problems : response.data.totalSolved,
+        easy : response.data.easySolved,
+        medium : response.data.mediumSolved,
+        hard: response.data.hardSolved,
         password : password
     })
     //onsole.log(newUser);
