@@ -5,8 +5,11 @@ mongoose.connect(DB_URL)
 
 // Create a Schema for Users
 const userSchema = new mongoose.Schema({
+    firstName : String,
+    lastName : String,
     username: String,
-    problems : Number
+    problems : Number,
+    password : String
 });
 
 // Create a model from the schema

@@ -1,9 +1,12 @@
 const {Router} = require("express");
 const router =Router();
+const { JWT_SECRET } = require("../config");
+const jwt = require("jsonwebtoken");
 const {User} = require("./../db")
-const axios = require("axios")
+const axios = require("axios");
+const authMiddleware = require("../middleware");
 
-router.get('/', async(req,res)=>{
+router.get('/bulk', async(req,res)=>{
     const filter=req.query.filter||"";
     const users = await User.find({
         $or: [
@@ -11,18 +14,33 @@ router.get('/', async(req,res)=>{
                 "$regex":filter
             } }
         ]
-    }).select('username problems -_id');
+    }).select('-__v -password ');
     console.log(users);
     res.send(users);
 })
-
-router.post('/', async (req,res)=>{
+router.post("/signin",async(req,res)=>{
+    const user = await User.findOne({username : req.body.username,password : req.body.password});
+    if(!user)
+    {
+        return res.status(411).json({
+            message : "Error while loggin in"
+        })
+    }
+    const token = jwt.sign({userId : user._id},JWT_SECRET);
+    res.json({
+            token: token
+        });
+})
+router.post('/signup', async (req,res)=>{
     const username=req.body.username;
+    const firstName = req.body.firstName;
+    const lastName = req.body.firstName;
+    const password = req.body.password;
     const user = await User.findOne({username});
     if(user)
     {
         return res.status(411).json({
-            message :"Username already present"
+            message :"User already present"
         })
     }
     const response = await axios.get("https://leetcode-api-faisalshohag.vercel.app/"+username);
@@ -33,12 +51,17 @@ router.post('/', async (req,res)=>{
         })
     }
     const newUser =await User.create({
+        firstName : firstName,
+        lastName : lastName,
         username:username,
-        problems : response.data.totalSolved
+        problems : response.data.totalSolved,
+        password : password
     })
-    console.log(newUser);
+    //onsole.log(newUser);
+    const token = jwt.sign({userId : newUser._id},JWT_SECRET);
     res.json({
-            message : "User created succesfully"
+            message : "User created succesfully",
+            token: token
         });
 })
 

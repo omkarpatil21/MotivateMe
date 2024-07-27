@@ -1,8 +1,10 @@
 
 function Nav()
 {
-    return <>
-        HI there
-    </>
+    return (
+        <div>
+            <div>MotivateMe.com</div>
+        </div>
+    )
 }
 export default Nav
