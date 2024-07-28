@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState,useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
-export const Signup = ()=>{
+export const Signup = (props)=>{
     const [firstName, setFirstName]=useState("");
     const [lastName,setLastName]=useState("");
     const [username,setUsername]=useState("");
@@ -25,6 +25,8 @@ export const Signup = ()=>{
         if(response.data.token)
         {
             localStorage.setItem("token","Bearer "+response.data.token);
+            
+            props.setIsAuthenticated(true);
             navigate('/main')
         }
         else{

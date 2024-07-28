@@ -1,7 +1,7 @@
 import { useState ,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-export const Signin = ()=>{
+export const Signin = (props)=>{
     const [username,setUsername]= useState("");
     const [password,setPassword]= useState("");
     const navigate = useNavigate();
@@ -27,6 +27,7 @@ export const Signin = ()=>{
         {
             console.log(data.token)
             localStorage.setItem('token',"Bearer "+data.token);
+            props.setIsAuthenticated(true);
             navigate('/main')
         }
         else{

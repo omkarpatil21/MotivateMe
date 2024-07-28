@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+function Navbar(props) {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         setIsAuthenticated(true);
+    //     } else {
+    //         setIsAuthenticated(false);
+    //     }
+    // }, []);
 
     const handleLogin = () => {
         // Redirect to login page or perform login action
@@ -21,7 +20,7 @@ function Navbar() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        setIsAuthenticated(false);
+        props.setIsAuthenticated(false);
         navigate('/'); // Redirect to home or landing page
     };
 
@@ -29,7 +28,7 @@ function Navbar() {
         <nav style={{display: "flex", justifyContent: "space-between"}}>
             <div>MotivateMe.com</div>
             <div>
-                {isAuthenticated ? (
+                {props.isAuthenticated ? (
                     <button onClick={handleLogout}>Logout</button>
                 ) : (
                     <button onClick={handleLogin}>Login</button>
