@@ -3,6 +3,8 @@ import './App.css'
 import Landing from './components/Landing'
 import Navbar from './components/Nav'
 import Main from './components/Main'
+import JoinCohort from './components/JoinCohort'
+import Cohort from './components/Cohort'
 import CreateCohort from './components/CreateCohort'
 import { Signin } from './components/Signin'
 import {Signup} from './components/Signup'
@@ -25,7 +27,8 @@ function App() {
             <Route path="/signin" element={<Signin setIsAuthenticated={setIsAuthenticated}/>}></Route>
             <Route path="/main" element={<Main/>}></Route>
             <Route path="/create-cohort" element={<CreateCohort />} />
-            {/* <Route path="/join-cohort" element={<JoinCohort />} /> */}
+            <Route path="/join-cohort" element={<JoinCohort />} />
+            <Route path="/cohort/:cohortName" element={<Cohort />} />
           </Routes>
         </BrowserRouter>
     </>

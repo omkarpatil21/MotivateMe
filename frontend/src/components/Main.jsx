@@ -42,6 +42,16 @@ function Main() {
 
     return (
         <div>
+            <div style={{ display: "flex", justifyContent: "space-evenly" }} >
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
+            <button onClick={handleCreateCohort} style={{ padding: "10px 20px" }}>Create Cohort</button>
+            </div>
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <button onClick={()=>{
+                    navigate("/join-cohort")
+                }} style={{ padding: "10px 20px" }}>Join Cohort</button>
+            </div>
+            </div>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <input 
                     onChange={(e) => setFilter(e.target.value)} 
@@ -85,9 +95,6 @@ function Main() {
                     {sortedUsers.map(user => <User key={user._id} user={user} />)}
                 </tbody>
             </table>
-            <div style={{ marginTop: "20px", textAlign: "center" }}>
-                <button onClick={handleCreateCohort} style={{ padding: "10px 20px" }}>Create Cohort</button>
-            </div>
         </div>
     );
 }

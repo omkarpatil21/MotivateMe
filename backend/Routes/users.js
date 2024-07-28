@@ -26,7 +26,7 @@ router.post("/signin",async(req,res)=>{
             message : "Error while loggin in"
         })
     }
-    const token = jwt.sign({userId : user._id},JWT_SECRET);
+    const token = jwt.sign({username : user.username},JWT_SECRET);
     res.json({
             token: token
         });

@@ -31,7 +31,7 @@ function CreateCohort() {
                 }
             );
             console.log(response);
-            navigate('/main'); // Redirect to main page or another page after successful creation
+            navigate(`/cohort/${name}`); // Redirect to main page or another page after successful creation
         } catch (error) {
             console.error(" ", error.response.data);
             alert(error.response.data.error);
