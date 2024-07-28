@@ -3,12 +3,18 @@ import './App.css'
 import Landing from './components/Landing'
 import Navbar from './components/Nav'
 import Main from './components/Main'
+import CreateCohort from './components/CreateCohort'
 import { Signin } from './components/Signin'
 import {Signup} from './components/Signup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(()=>{
+    if (localStorage.token) {
+      setIsAuthenticated(true);
+  }
+  })
   return (
     <>
       <BrowserRouter>
@@ -18,6 +24,8 @@ function App() {
             <Route path="/signup" element={<Signup setIsAuthenticated={setIsAuthenticated}/>}></Route>
             <Route path="/signin" element={<Signin setIsAuthenticated={setIsAuthenticated}/>}></Route>
             <Route path="/main" element={<Main/>}></Route>
+            <Route path="/create-cohort" element={<CreateCohort />} />
+            {/* <Route path="/join-cohort" element={<JoinCohort />} /> */}
           </Routes>
         </BrowserRouter>
     </>

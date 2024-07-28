@@ -36,6 +36,10 @@ function Main() {
         return 0;
     });
 
+    const handleCreateCohort = () => {
+        navigate("/create-cohort", { state: { users } });
+    };
+
     return (
         <div>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
@@ -81,6 +85,9 @@ function Main() {
                     {sortedUsers.map(user => <User key={user._id} user={user} />)}
                 </tbody>
             </table>
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <button onClick={handleCreateCohort} style={{ padding: "10px 20px" }}>Create Cohort</button>
+            </div>
         </div>
     );
 }

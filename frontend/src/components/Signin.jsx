@@ -31,6 +31,7 @@ export const Signin = (props)=>{
             navigate('/main')
         }
         else{
+            alert(data.message)
             navigate('/signin')
         }
     }

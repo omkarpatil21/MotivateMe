@@ -15,7 +15,7 @@ router.get('/bulk',authMiddleware, async(req,res)=>{
             { lastName: { $regex: filter, $options: 'i' } }
         ]
     }).select('-__v -password ');
-    console.log(users);
+   // console.log(users);
     res.send(users);
 })
 router.post("/signin",async(req,res)=>{
